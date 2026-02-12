@@ -20,9 +20,12 @@ on:
         description: 'The commit in current repository the tag refers to'
         required: false
 
+permissions:
+  contents: write
+
 jobs:
   submodule_update_hotfix:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
     - name: Check input for retagging
@@ -41,7 +44,7 @@ jobs:
 
 
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v6
       with:
         fetch-depth: 0
         ref: master
@@ -50,8 +53,8 @@ jobs:
 
     - name: Set github-actions name and email
       run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
     - name: Update submodule and retag accordingly
       run: |
